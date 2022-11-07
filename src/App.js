@@ -5,6 +5,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import { Routes } from './Components/Routes/Routes';
 
 
 
@@ -12,7 +13,9 @@ function App() {
  
   return (
     <div className="">
-    <h1 className='text-5xl'>hello text this file </h1>
+    <RouterProvider router={Routes}>
+
+    </RouterProvider>
     </div>
   );
 }
