@@ -18,6 +18,21 @@ const ContexApi = ({ children }) => {
         return signInWithPopup(auth, googleProvider)
     }
 
+    const githubLogin = () => {
+        setLoading(true);
+        return signInWithPopup(auth, gitHubProvider)
+    }
+
+    const facebookLogin = () => {
+        setLoading(true)
+        return signInWithPopup(auth, facebookProvider)
+    }
+
+    const singUpEmailPassword = (email, password) => {
+        setLoading(true);
+        return createUserWithEmailAndPassword(auth, email, password)
+    }
+
     
 
     const authInfo = {  }
