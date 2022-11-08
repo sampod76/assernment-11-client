@@ -11,7 +11,39 @@ const Login = () => {
 
     const navigate = useNavigate()
 
+    const handleGoogleLogin = (e) => {
 
+        googleLogin()
+            .then(result => {
+                console.log(result.user)
+                Swal.fire(
+                    `successfully login`,
+                    'You clicked the button!',
+                    'success'
+                )
+                navigate('/')
+            })
+            .catch(err => {
+                setLoading(false)
+                toast.error(err.message)
+            })
+    }
+   
+
+
+    if (loading) {
+        return <div>
+            <ColorRing
+                visible={true}
+                height="80"
+                width="80"
+                ariaLabel="blocks-loading"
+                wrapperStyle={{}}
+                wrapperClass="blocks-wrapper"
+                colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+            />
+        </div>
+    }
 
     return (
         <div className=" mx-auto  max-w-lg  p-4 rounded-md shadow sm:p-8 dark:bg-gray-900 dark:text-gray-100 bg-slate-900 rounded-lg text-white my-3" >
