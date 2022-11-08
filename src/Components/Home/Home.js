@@ -22,7 +22,18 @@ const Home = () => {
     }, [])
 
     return (
-        
+        <div>
+
+            <div className='mt-2'>
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-10'>
+                    {
+                        services.map(service => <Services key={service._id} service={service}></Services>)
+                    }
+                </div>
+            </div>
+           
+
+        </div>
     );
 };
 
