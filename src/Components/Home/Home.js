@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
+import Offer from '../Offer/Offer';
 import Services from './section/Services';
 
 const Home = () => {
@@ -69,6 +70,10 @@ const Home = () => {
                 <div className='flex items-center ' >
                     <img className='h-24 rounded-lg' src="https://media.tenor.com/GzOGkwM4EvcAAAAM/popcorn-delivery.gif" alt="" />
                 </div>
+            </div>
+
+            <div>
+                <Offer></Offer>
             </div>
 
         </div>

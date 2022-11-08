@@ -2,6 +2,7 @@ import SingleService from "../PrivitePage/AddService";
 import AddService from "../PrivitePage/AddService";
 import ReviewAll from "../PrivitePage/review/ReviewAll";
 import ReviewCard from "../PrivitePage/review/ReviewCard";
+import ReviewUpdate from "../PrivitePage/review/ReviewUpdate";
 import EnvelideRout from "../Share/404Rout";
 const { createBrowserRouter } = require("react-router-dom");
 const { default: Home } = require("../Home/Home");
@@ -39,9 +40,13 @@ export const Routes = createBrowserRouter([
                 element: <ReviewAll></ReviewAll>
             },
             {
-                path: '/reviews/:id',
-                element: <ReviewCard></ReviewCard>
+                path: '/reviews/updates/:id',
+                element: <ReviewUpdate></ReviewUpdate>
             },
+            // {
+            //     path: '/reviews/',
+            //     element: <ReviewCard></ReviewCard>
+            // },
             {
                 path: '/login',
                 element: <Login></Login>

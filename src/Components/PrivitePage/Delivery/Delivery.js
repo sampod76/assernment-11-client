@@ -18,7 +18,7 @@ const Delivery = () => {
                 }
             })
     }, [])
-    console.log(services)
+    // console.log(services)
     return (
         <div>
             <Link to='' className='flex justify-center items-center gap-3 bg-slate-400 rounded-lg w-fit px-2
