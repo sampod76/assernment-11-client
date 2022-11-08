@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContex } from '../ContexApi/ContexApi';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Header = () => {
-    const {name} = useContext(AuthContex)
+   
     return (
-        <div>
-           <h1>{name}</h1> 
-        </div>
+        <div></div>
     );
 };
 
