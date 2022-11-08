@@ -28,7 +28,66 @@ const Login = () => {
                 toast.error(err.message)
             })
     }
-   
+    const handleGitLogin = (e) => {
+
+        githubLogin()
+            .then(result => {
+                console.log(result.user)
+                Swal.fire(
+                    `successfully login`,
+                    'You clicked the button!',
+                    'success'
+                )
+                navigate('/')
+            })
+            .catch(err => {
+                setLoading(false)
+                toast.error(err.message)
+            })
+    }
+    const handleFbLogin = (e) => {
+
+        facebookLogin()
+            .then(result => {
+                console.log(result.user)
+                Swal.fire(
+                    `successfully login`,
+                    'You clicked the button!',
+                    'success'
+                )
+                navigate('/')
+            })
+            .catch(err => {
+                setLoading(false)
+                toast.error(err.message)
+            })
+    }
+
+    const handleEmailAndPassword = (event) => {
+        event.preventDefault()
+        const form = event.target;
+        const email = form.email.value;
+        const password = form.password.value;
+
+        console.log(email, password)
+        loginEmailPassword(email, password)
+            .then(result => {
+                console.log(result.user)
+                Swal.fire(
+                    `successfully login`,
+                    'You clicked the button!',
+                    'success'
+                )
+                navigate('/')
+
+            })
+            .catch(err => {
+                setLoading(false)
+                toast.error(err.message)
+            })
+
+
+    }
 
 
     if (loading) {
