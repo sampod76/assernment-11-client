@@ -20,7 +20,24 @@ const Delivery = () => {
     }, [])
     console.log(services)
     return (
-       
+        <div>
+            <Link to='' className='flex justify-center items-center gap-3 bg-slate-400 rounded-lg w-fit px-2
+            mx-auto'>
+                <p className='text-3xl '>ADD YOUR DEMAND SERVICE </p>
+                <p><kbd className="kbd text-3xl">+</kbd></p>
+            </Link>
+             <div className='mt-2'>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
+                    {
+                        services.map(service => <Services key={service._id} service={service}></Services>)
+                    }
+                </div>
+            </div>
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
+        </div>
     );
 };
 
