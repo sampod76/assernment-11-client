@@ -33,9 +33,27 @@ const ContexApi = ({ children }) => {
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
-    
+    const loginEmailPassword = (email, password) => {
+        setLoading(true);
+        return signInWithEmailAndPassword(auth, email, password)
+    }
 
-    const authInfo = {  }
+    const logOut = () => {
+        return signOut(auth)
+    }
+
+    useEffect(() => {
+        const unSuscribe = onAuthStateChanged(auth, currentUser => {
+            setUser(currentUser)
+            setLoading(false)
+            // console.log(currentUser)
+        })
+        return () => {
+            unSuscribe()
+        }
+    }, [loading])
+
+    const authInfo = { logOut, loginEmailPassword, singUpEmailPassword, facebookLogin, githubLogin, googleLogin, setLoading, loading, user }
     return (
         <AuthContex.Provider value={authInfo}>
             {children}
