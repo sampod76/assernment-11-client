@@ -13,7 +13,7 @@ const ReviewCard = ({ service, id }) => {
 
     const { user } = useContext(AuthContex);
     const [reviewSingel , setReviewSingle]=useState([])
-    const [review, setReview] = useState(1);
+    const [review, setReview] = useState(5);
     const [defandence,setDefance]=useState(false)
 
 
@@ -25,7 +25,7 @@ const ReviewCard = ({ service, id }) => {
             Swal.fire({
                 icon: 'error',
                 title: 'At fast Login',
-                text: 'Then ',
+                text: 'Then reviews this item',
                 footer: '<a href="">Why do I have this issue?</a>'
             })
             navigate('/login')
@@ -145,7 +145,7 @@ const ReviewCard = ({ service, id }) => {
 
                                                 <div>
                                                     <label htmlFor='ratig' className='text-lg font-bold mx-1'>Rating</label>
-                                                    <select id='ratig' className='p-2' defaultValue='1' onClick={(e) => setReview(e.target.value)} >
+                                                    <select id='ratig' className='p-2' defaultValue='5' onClick={(e) => setReview(e.target.value)} >
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
                                                         <option value="3">3</option>

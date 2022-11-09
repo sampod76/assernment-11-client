@@ -1,6 +1,7 @@
 import Addservice from "../Addservice/Addservice";
 import SingleService from "../PrivitePage/AddService";
 import AddService from "../PrivitePage/AddService";
+import Profile from "../PrivitePage/Profile/Profile";
 import ReviewAll from "../PrivitePage/review/ReviewAll";
 import ReviewCard from "../PrivitePage/review/ReviewCard";
 import ReviewUpdate from "../PrivitePage/review/ReviewUpdate";
@@ -60,7 +61,12 @@ export const Routes = createBrowserRouter([
             {
                 path: '/blog',
                 element: <Bloge></Bloge>
+            },
+            {
+                path:'/profile',
+                element:<Priviteroutes><Profile></Profile></Priviteroutes>
             }
+
         ]
     },
     {
