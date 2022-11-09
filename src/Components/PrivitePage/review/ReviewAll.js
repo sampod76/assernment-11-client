@@ -9,7 +9,7 @@ const ReviewAll = () => {
     const [reviewall, setReview] = useState([])
 
     useEffect(() => {
-        fetch('http://localhost:5000/reviews')
+        fetch('https://server-side-rust.vercel.app/reviews')
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
@@ -24,7 +24,7 @@ const ReviewAll = () => {
    
 
     const handleDelete = (e) => {
-        fetch(`http://localhost:5000/reviews/${e}`, {
+        fetch(`https://server-side-rust.vercel.app/reviews/${e}`, {
             method: 'DELETE'
         }).then(res => res.json())
         .then(data=>{

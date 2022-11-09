@@ -47,7 +47,7 @@ const ReviewCard = ({ service, id }) => {
 
         // console.log(reviewData);
 
-        fetch('http://localhost:5000/reviews', {
+        fetch('https://server-side-rust.vercel.app/reviews', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"

@@ -1,13 +1,13 @@
 
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContex } from '../ContexApi/ContexApi';
 import toast, { Toaster } from 'react-hot-toast';
 import Swal from 'sweetalert2'
 
 const Register = () => {
     const { setLoading, loading, singUpEmailPassword } = useContext(AuthContex)
-
+const navigate = useNavigate()
     const handleEmailAndPassword = (event) => {
         event.preventDefault()
         const form = event.target;
@@ -24,6 +24,7 @@ const Register = () => {
                     'success'
                 )
                 form.reset()
+                navigate('/')
             })
             .catch(err => {
                 setLoading(false)

@@ -1,16 +1,17 @@
-import React, { useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContex } from '../ContexApi/ContexApi';
 import toast, { Toaster } from 'react-hot-toast';
 import Swal from 'sweetalert2'
 import { Audio, ColorRing } from 'react-loader-spinner'
-import { IconName,FaFacebook } from "react-icons/fa";
+import { IconName, FaFacebook } from "react-icons/fa";
 
 const Login = () => {
     const { loginEmailPassword, facebookLogin, githubLogin, googleLogin, setLoading, loading, user } = useContext(AuthContex);
-
+    const location = useLocation()
     const navigate = useNavigate()
 
+    const from = location?.state?.from?.pathname || '/'
     const handleGoogleLogin = (e) => {
 
         googleLogin()
@@ -21,7 +22,7 @@ const Login = () => {
                     'You clicked the button!',
                     'success'
                 )
-                navigate('/')
+                navigate(from, {replace:true})
             })
             .catch(err => {
                 setLoading(false)
@@ -38,7 +39,8 @@ const Login = () => {
                     'You clicked the button!',
                     'success'
                 )
-                navigate('/')
+               
+                navigate(from, { replace: true })
             })
             .catch(err => {
                 setLoading(false)
@@ -78,7 +80,7 @@ const Login = () => {
                     'You clicked the button!',
                     'success'
                 )
-                navigate('/')
+                navigate(from, { replace: true })
 
             })
             .catch(err => {
@@ -88,6 +90,12 @@ const Login = () => {
 
 
     }
+
+    useEffect(()=>{
+        if(user?.uid){
+            navigate(from, { replace: true })
+        }
+    },[user,from,navigate])
 
 
     if (loading) {
@@ -123,9 +131,7 @@ const Login = () => {
                     <p>Login with GitHub</p>
                 </Link>
 
-                <Link onClick={handleFbLogin} aria-label="Login with Twitter" role="button" className="flex items-center justify-center w-full p-4 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 dark:border-gray-400 focus:ring-violet-400">
-                    <><span className='text-2xl'><FaFacebook></FaFacebook></span> <span>Login with Facebook</span></>
-                </Link>
+              
             </div>
             <div className="flex items-center w-full my-4">
                 <hr className="w-full dark:text-gray-400" />

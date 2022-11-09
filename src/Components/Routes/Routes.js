@@ -1,9 +1,11 @@
+import Addservice from "../Addservice/Addservice";
 import SingleService from "../PrivitePage/AddService";
 import AddService from "../PrivitePage/AddService";
 import ReviewAll from "../PrivitePage/review/ReviewAll";
 import ReviewCard from "../PrivitePage/review/ReviewCard";
 import ReviewUpdate from "../PrivitePage/review/ReviewUpdate";
 import EnvelideRout from "../Share/404Rout";
+import Priviteroutes from "./Priviteroutes";
 const { createBrowserRouter } = require("react-router-dom");
 const { default: Home } = require("../Home/Home");
 const { default: Main } = require("../Mian/Main");
@@ -37,16 +39,16 @@ export const Routes = createBrowserRouter([
             },
             {
                 path: '/reviews',
-                element: <ReviewAll></ReviewAll>
+                element: <Priviteroutes><ReviewAll></ReviewAll></Priviteroutes>
             },
             {
                 path: '/reviews/updates/:id',
-                element: <ReviewUpdate></ReviewUpdate>
+                element: <Priviteroutes><ReviewUpdate></ReviewUpdate></Priviteroutes>
             },
-            // {
-            //     path: '/reviews/',
-            //     element: <ReviewCard></ReviewCard>
-            // },
+            {
+                path: '/addservices',
+                element: <Addservice></Addservice>
+            },
             {
                 path: '/login',
                 element: <Login></Login>

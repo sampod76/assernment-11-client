@@ -12,7 +12,7 @@ const ReviewUpdate = () => {
     console.log(typeof (rating))
 
     useEffect(() => {
-        fetch(`http://localhost:5000/reviews/${id}`)
+        fetch(`https://server-side-rust.vercel.app/reviews/${id}`)
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
@@ -38,7 +38,7 @@ const ReviewUpdate = () => {
         }
 
         console.log(updateData);
-        fetch(`http://localhost:5000/reviews/${id}`, {
+        fetch(`https://server-side-rust.vercel.app/reviews/${id}`, {
             method: 'PATCH',
             headers: {
                 "Content-Type": "application/json"

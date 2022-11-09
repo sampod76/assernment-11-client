@@ -7,7 +7,7 @@ const Delivery = () => {
     const [services, setServices] = useState([])
 
     useEffect(() => {
-        fetch('http://localhost:5000/delivery')
+        fetch('https://server-side-rust.vercel.app/delivery')
             .then(res => res.json())
             .then(data => {
                 
