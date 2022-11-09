@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { Helmet } from "react-helmet";
 
 const Addservice = () => {
+
     const [service, setService] = useState({})
 
 
@@ -8,22 +10,27 @@ const Addservice = () => {
     const handleAddService = (event) => {
         event.preventDefault()
         const form = event.target;
-        const name = form.name.value;
-        const service = form.service.value;
-        const addres = form.addres.value || 'dhaka 1205';
+        const username = form.name.value;
+
+        const name = form.service.value;
+        const address = form.addres.value || 'dhaka 1205';
         const email = form.email.value;
         const picture = form.url.value || 'https://img.freepik.com/free-vector/delivery-staff-ride-motorcycles-shopping-concept_1150-34879.jpg?w=826&t=st=1667954238~exp=1667954838~hmac=42a0bfd5a173f6551077522b60ccd63b3a6d5507664b3bbffd43d1bbdb4c5b07';
-        const about = form.commit.value
+        const about = form.commit.value;
+
+
+
 
         const dataService = {
-            name, service, addres, email, picture
+            name, username, address, email, picture, balance: 0, about, rating: 3
         }
 
 
         fetch('http://localhost:5000/delivery', {
             method: 'POST',
             headers: {
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                authorisation:`${localStorage.getItem("jwt-token")}`
             },
             body: JSON.stringify(dataService)
         })
@@ -31,6 +38,7 @@ const Addservice = () => {
             .then(data => {
                 if (data.success) {
                     alert(data.message)
+                    form.reset()
                 }
                 else {
                     alert(data.message)
@@ -51,6 +59,12 @@ const Addservice = () => {
 
     return (
         <div>
+            <div>
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>Add Services</title>
+                </Helmet>
+            </div>
             <section onSubmit={handleAddService} className="p-6 my-2 dark:bg-gray-800  dark:text-gray-50 bg-gradient-to-r from-cyan-500 to-blue-500">
                 <form className="container flex flex-col mx-auto space-y-12 ng-untouched ng-pristine ng-valid">
 

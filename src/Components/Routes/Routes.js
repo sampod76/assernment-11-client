@@ -47,7 +47,7 @@ export const Routes = createBrowserRouter([
             },
             {
                 path: '/addservices',
-                element: <Addservice></Addservice>
+                element: <Priviteroutes><Addservice></Addservice></Priviteroutes>
             },
             {
                 path: '/login',

@@ -5,6 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import Swal from 'sweetalert2'
 import { Audio, ColorRing } from 'react-loader-spinner'
 import { IconName, FaFacebook } from "react-icons/fa";
+import { Helmet } from "react-helmet";
 
 const Login = () => {
     const { loginEmailPassword, facebookLogin, githubLogin, googleLogin, setLoading, loading, user } = useContext(AuthContex);
@@ -15,14 +16,32 @@ const Login = () => {
     const handleGoogleLogin = (e) => {
 
         googleLogin()
-            .then(result => {
-                console.log(result.user)
-                Swal.fire(
-                    `successfully login`,
-                    'You clicked the button!',
-                    'success'
-                )
-                navigate(from, {replace:true})
+        .then(result => {
+            const user = {}
+                // jwt token creaite then account login 
+
+                fetch('http://localhost:5000/jwt', {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body :JSON.stringify(user)
+
+
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data.token)
+                        localStorage.setItem('jwt-token', data.token)
+                        Swal.fire(
+                            `successfully login`,
+                            'You clicked the button!',
+                            'success'
+                        )
+                        navigate(from, { replace: true })
+                    })
+
+
             })
             .catch(err => {
                 setLoading(false)
@@ -39,7 +58,7 @@ const Login = () => {
                     'You clicked the button!',
                     'success'
                 )
-               
+
                 navigate(from, { replace: true })
             })
             .catch(err => {
@@ -74,13 +93,30 @@ const Login = () => {
         console.log(email, password)
         loginEmailPassword(email, password)
             .then(result => {
-                console.log(result.user)
-                Swal.fire(
-                    `successfully login`,
-                    'You clicked the button!',
-                    'success'
-                )
-                navigate(from, { replace: true })
+            const user= {email}
+                // jwt token creaite then account login 
+
+                fetch('http://localhost:5000/jwt', {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body :JSON.stringify(user)
+
+
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data.token)
+                        localStorage.setItem('jwt-token', data.token)
+                        Swal.fire(
+                            `successfully login`,
+                            'You clicked the button!',
+                            'success'
+                        )
+                        navigate(from, { replace: true })
+                    })
+
 
             })
             .catch(err => {
@@ -91,11 +127,11 @@ const Login = () => {
 
     }
 
-    useEffect(()=>{
-        if(user?.uid){
+    useEffect(() => {
+        if (user?.uid) {
             navigate(from, { replace: true })
         }
-    },[user,from,navigate])
+    }, [user, from, navigate])
 
 
     if (loading) {
@@ -113,7 +149,12 @@ const Login = () => {
     }
 
     return (
-        <div className=" mx-auto  max-w-lg  p-4 rounded-md shadow sm:p-8 dark:bg-gray-900 dark:text-gray-100 bg-slate-900 rounded-lg text-white my-3" >
+        <div className=" mx-auto  max-w-lg  p-4 rounded-md shadow sm:p-8 dark:bg-gray-900 dark:text-gray-100
+         bg-slate-900 rounded-lg text-white my-3" >
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Login..</title>
+            </Helmet>
             <h2 className="mb-3 text-3xl font-semibold text-center">Login to your account</h2>
 
             <div className="my-6 space-y-4">
@@ -131,7 +172,7 @@ const Login = () => {
                     <p>Login with GitHub</p>
                 </Link>
 
-              
+
             </div>
             <div className="flex items-center w-full my-4">
                 <hr className="w-full dark:text-gray-400" />

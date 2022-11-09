@@ -2,17 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './allCss.css'
 import { FcRating } from "react-icons/fc";
+import { Helmet } from "react-helmet";
 const ReviewUpdate = () => {
     const [defandence, setDefance] = useState(false)
     const [review, setReview] = useState({})
-    const { _id, name, phone, photo, rating, email
+    const { _id, name, phone, photo, rating, email,comment
     } = review
+    console.log(review)
     const [ratingRv, setRating] = useState(0)
     const { id } = useParams()
     console.log(typeof (rating))
 
     useEffect(() => {
-        fetch(`https://server-side-rust.vercel.app/reviews/${id}`)
+        fetch(`http://localhost:5000/reviews/${id}`)
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
@@ -30,15 +32,17 @@ const ReviewUpdate = () => {
 
         const name = event.target.name.value;
         const phone = event.target.phone.value;
+        const comment= event.target.comment.value;
 
         const updateData = {
             name,
             phone,
             rating:ratingRv,
+            comment
         }
 
         console.log(updateData);
-        fetch(`https://server-side-rust.vercel.app/reviews/${id}`, {
+        fetch(`http://localhost:5000/reviews/${id}`, {
             method: 'PATCH',
             headers: {
                 "Content-Type": "application/json"
@@ -58,6 +62,10 @@ const ReviewUpdate = () => {
     }
     return (
         <div className='backgroundG ' >
+            <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>Update Review</title>
+                </Helmet>
             <div className="w-full h-screen">
                 <div className="container mx-auto py-8">
                     <div className=" w-96 md:w-fit mx-auto bg-slate-300
@@ -85,6 +93,14 @@ const ReviewUpdate = () => {
                                     <input className=" border rounded w-full
                                      py-2 px-3 text-grey-darker" type="number" defaultValue={phone}
                                         name="phone" id="student_name" placeholder="Enter Your Name" />
+
+                                </div>
+                                <div className="mb-4">
+                                    <label className="block text-grey-darker 
+                                    text-sm font-bold mb-2">comment/about</label>
+                                    <input className=" border rounded w-full
+                                     py-2 px-3 text-grey-darker" type="text" defaultValue={comment}
+                                        name="comment" id="student_name" placeholder="Enter Your Name" />
 
                                 </div>
 

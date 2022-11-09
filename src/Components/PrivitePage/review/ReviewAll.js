@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { FcRating } from "react-icons/fc";
 import { Link } from 'react-router-dom';
+import { Helmet } from "react-helmet";
+import { useContext } from 'react';
+import { AuthContex } from '../../ContexApi/ContexApi';
 
 
 const ReviewAll = () => {
+    const {user}=useContext(AuthContex)
     const [defandence,setDefance]=useState(false)
 
     const [reviewall, setReview] = useState([])
 
     useEffect(() => {
-        fetch('https://server-side-rust.vercel.app/reviews')
+        fetch(`http://localhost:5000/reviews/${user?.email}`)
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
@@ -24,7 +28,7 @@ const ReviewAll = () => {
    
 
     const handleDelete = (e) => {
-        fetch(`https://server-side-rust.vercel.app/reviews/${e}`, {
+        fetch(`http://localhost:5000/reviews/${e}`, {
             method: 'DELETE'
         }).then(res => res.json())
         .then(data=>{
@@ -39,10 +43,23 @@ const ReviewAll = () => {
         
     }
 
-    
+    console.log(reviewall.length);
 
     return (
         <div>
+            <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>All Review</title>
+                </Helmet>
+             {
+                reviewall.length ==0 && <div className='flex justify-center items-center h-screen '>
+                <div>
+                <h1 className='text-5xl font-bold text-red-600 text-center'>No reviews found yet</h1>
+                <img className='w-[40%] mx-auto' src="https://cdn.dribbble.com/users/1489103/screenshots/6326497/no-data-found.png" alt="" />
+                </div>
+            </div>
+             }
+
             {
                 reviewall.map(review => <div key={review._id} review={review}>
                     <div className="container flex flex-col w-full mt-1 p-6 mx-auto divide-y rounded-md divide-gray-700 dark:bg-gray-900
@@ -50,7 +67,10 @@ const ReviewAll = () => {
                         <div className="flex justify-between p-4">
                             <div className="flex space-x-4">
                                 <div>
-                                    <img src={review?.photo} alt="" className="object-cover w-12 h-12 rounded-full dark:bg-gray-500 rounded-full" />
+                                    {
+                                       review?.photo ?
+                                        <img src={review?.photo} alt="" className="object-cover w-12 h-12 rounded-full dark:bg-gray-500 rounded-full" /> :<img src='https://cdn.pixabay.com/photo/2017/02/16/13/42/box-2071537__340.png' alt="" className="object-cover w-12 h-12 rounded-full dark:bg-gray-500 rounded-full" /> 
+                                    }
                                 </div>
                                 <div>
                                     <h4 className="font-bold">{review.name}</h4>

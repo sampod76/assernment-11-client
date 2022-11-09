@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Services from '../../Home/section/Services';
 import toast, { Toaster } from 'react-hot-toast';
+import { Helmet } from "react-helmet";
 
 const Delivery = () => {
     const [services, setServices] = useState([])
 
     useEffect(() => {
-        fetch('https://server-side-rust.vercel.app/delivery')
+        fetch('http://localhost:5000/delivery')
             .then(res => res.json())
             .then(data => {
                 
@@ -21,7 +22,11 @@ const Delivery = () => {
     // console.log(services)
     return (
         <div>
-            <Link to='' className='flex justify-center items-center gap-3 bg-slate-400 rounded-lg w-fit px-2
+            <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>Service/delivery</title>
+                </Helmet>
+            <Link to='/addservices' className='flex justify-center items-center gap-3 bg-slate-400 rounded-lg w-fit px-2
             mx-auto'>
                 <p className='text-3xl '>ADD YOUR DEMAND SERVICE </p>
                 <p><kbd className="kbd text-3xl">+</kbd></p>

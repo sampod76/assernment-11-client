@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContex } from '../ContexApi/ContexApi';
 import toast, { Toaster } from 'react-hot-toast';
 import Swal from 'sweetalert2'
+import { Helmet } from "react-helmet";
 
 const Register = () => {
     const { setLoading, loading, singUpEmailPassword } = useContext(AuthContex)
@@ -37,6 +38,10 @@ const navigate = useNavigate()
     return (
 
         <div className="w-full h-auto overflow-scroll block h-screen bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 p-4 flex items-center justify-center" >
+            <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>Register</title>
+                </Helmet>
             <div className="bg-white py-6 px-10 sm:max-w-md w-full ">
                 <div className="sm:text-3xl text-2xl font-semibold text-center text-sky-600  mb-12">
                     Registration Form

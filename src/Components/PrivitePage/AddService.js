@@ -12,7 +12,7 @@ const SingleService = () => {
     // console.log(id);
 
     useEffect(() => {
-        fetch(`https://server-side-rust.vercel.app/delivery/${id}`)
+        fetch(`http://localhost:5000/delivery/${id}`)
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
@@ -52,7 +52,7 @@ const SingleService = () => {
                                 <input type="radio" name="rating-6" className="mask mask-star-2 bg-orange-400" />
                                 <input type="radio" name="rating-6" className="mask mask-star-2 bg-orange-400" />
                             </div>
-                            <Link to={`/review/${service._id} `} className="btn btn-primary">Review</Link>
+                           
                         </div>
                     </div>
                 </div>
