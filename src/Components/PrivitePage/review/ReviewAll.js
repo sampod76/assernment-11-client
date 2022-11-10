@@ -4,9 +4,11 @@ import { Link } from 'react-router-dom';
 
 import { useContext } from 'react';
 import { AuthContex } from '../../ContexApi/ContexApi';
+import useTitle from '../../Title/useTitle';
 
 
 const ReviewAll = () => {
+    useTitle('Reviews')
     const {user,logOut}=useContext(AuthContex)
     const [defandence,setDefance]=useState(false)
 

@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import Services from '../../Home/section/Services';
 import toast, { Toaster } from 'react-hot-toast';
 import { Audio, ColorRing } from 'react-loader-spinner'
+import useTitle from '../../Title/useTitle';
 
 
 const Delivery = () => {
+    useTitle('Service')
     const [services, setServices] = useState([])
     const [looding, setLooading] = useState(true)
 

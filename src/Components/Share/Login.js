@@ -5,13 +5,14 @@ import toast, { Toaster } from 'react-hot-toast';
 import Swal from 'sweetalert2'
 import { Audio, ColorRing } from 'react-loader-spinner'
 import { IconName, FaFacebook } from "react-icons/fa";
+import useTitle from '../Title/useTitle';
 
 
 const Login = () => {
     const { loginEmailPassword, facebookLogin, githubLogin, googleLogin, setLoading, loading, user } = useContext(AuthContex);
     const location = useLocation()
     const navigate = useNavigate()
-
+useTitle('login')
     const from = location?.state?.from?.pathname || '/'
     const handleGoogleLogin = (e) => {
 
@@ -46,6 +47,9 @@ const Login = () => {
             .catch(err => {
                 setLoading(false)
                 toast.error(err.message)
+            })
+            .finally(()=>{
+                setLoading(setLoading(false))
             })
     }
     const handleGitLogin = (e) => {

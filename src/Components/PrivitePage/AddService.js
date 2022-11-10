@@ -5,12 +5,13 @@ import ReviewAll from './review/ReviewAll';
 import ReviewCard from './review/ReviewCard';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import 'react-photo-view/dist/react-photo-view.css';
+import useTitle from '../Title/useTitle';
 
 const SingleService = () => {
     const [service, setService] = useState({})
     const { id } = useParams()
     // console.log(id);
-
+    useTitle(`${service.name}`)
     useEffect(() => {
         fetch(`https://server-side-rust.vercel.app/delivery/${id}`)
             .then(res => res.json())
