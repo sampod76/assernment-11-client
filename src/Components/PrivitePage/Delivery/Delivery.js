@@ -2,17 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Services from '../../Home/section/Services';
 import toast, { Toaster } from 'react-hot-toast';
-import { Helmet } from "react-helmet";
+import { Audio, ColorRing } from 'react-loader-spinner'
+
 
 const Delivery = () => {
     const [services, setServices] = useState([])
+    const [looding, setLooading] = useState(true)
 
     useEffect(() => {
-        fetch('http://localhost:5000/delivery')
+        fetch('https://server-side-rust.vercel.app/delivery')
             .then(res => res.json())
             .then(data => {
                 
                 if (data.success) {
+                    setLooading(false)
                     setServices(data.data)
                 }else {
                     toast.error(data.message)
@@ -20,12 +23,22 @@ const Delivery = () => {
             })
     }, [])
     // console.log(services)
+    if (looding) {
+        return <div className='w-fit mx-auto'>
+            <ColorRing
+                visible={true}
+                height="80"
+                width="80"
+                ariaLabel="blocks-loading"
+                wrapperStyle={{}}
+                wrapperClass="blocks-wrapper"
+                colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+            />
+        </div>
+    }
     return (
         <div>
-            <Helmet>
-                    <meta charSet="utf-8" />
-                    <title>Service/delivery</title>
-                </Helmet>
+           
             <Link to='/addservices' className='flex justify-center items-center gap-3 bg-slate-400 rounded-lg w-fit px-2
             mx-auto'>
                 <p className='text-3xl '>ADD YOUR DEMAND SERVICE </p>

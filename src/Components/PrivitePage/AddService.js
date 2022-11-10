@@ -12,7 +12,7 @@ const SingleService = () => {
     // console.log(id);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/delivery/${id}`)
+        fetch(`https://server-side-rust.vercel.app/delivery/${id}`)
             .then(res => res.json())
             .then(data => {
                 if (data.success) {

@@ -14,12 +14,12 @@ const Header = () => {
                 toast.success('successfull logout')
             })
             .catch(err => {
-                console.log(err.message);
+                // console.log(err.message);
                 toast.error(err.message)
             })
 
     }
-    console.log(user)
+ 
     return (
         <div className="navbar rounded-t-xl my-1 shadow-2xl bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
             <div className="navbar-start">

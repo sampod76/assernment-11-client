@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Helmet } from "react-helmet";
+
 
 const Addservice = () => {
 
@@ -26,7 +26,7 @@ const Addservice = () => {
         }
 
 
-        fetch('http://localhost:5000/delivery', {
+        fetch('https://server-side-rust.vercel.app/delivery', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
@@ -60,10 +60,7 @@ const Addservice = () => {
     return (
         <div>
             <div>
-                <Helmet>
-                    <meta charSet="utf-8" />
-                    <title>Add Services</title>
-                </Helmet>
+              
             </div>
             <section onSubmit={handleAddService} className="p-6 my-2 dark:bg-gray-800  dark:text-gray-50 bg-gradient-to-r from-cyan-500 to-blue-500">
                 <form className="container flex flex-col mx-auto space-y-12 ng-untouched ng-pristine ng-valid">

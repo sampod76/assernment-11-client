@@ -2,30 +2,36 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './allCss.css'
 import { FcRating } from "react-icons/fc";
-import { Helmet } from "react-helmet";
+
+import { useContext } from 'react';
+import { AuthContex } from '../../ContexApi/ContexApi';
 const ReviewUpdate = () => {
+    const { id } = useParams()
+    const {user,logOut}=useContext(AuthContex)
     const [defandence, setDefance] = useState(false)
     const [review, setReview] = useState({})
     const { _id, name, phone, photo, rating, email,comment
     } = review
-    console.log(review)
+    // console.log(review,id)
     const [ratingRv, setRating] = useState(0)
-    const { id } = useParams()
-    console.log(typeof (rating))
+    
+    
 
     useEffect(() => {
-        fetch(`http://localhost:5000/reviews/${id}`)
-            .then(res => res.json())
+        fetch(`https://server-side-rust.vercel.app/reviewsSongle/${id}`)
+            .then(res =>res.json())
             .then(data => {
                 if (data.success) {
-                    console.log(data.data)
+                    // console.log(data.data)
                     setReview(data.data)
                 }
                 else {
                     alert(data.message)
+                    // console.log(data.message);
                 }
             })
-    }, [defandence])
+    }, [defandence,id])
+
 
     const handleUpdate = (event) => {
         event.preventDefault()
@@ -41,14 +47,21 @@ const ReviewUpdate = () => {
             comment
         }
 
-        console.log(updateData);
-        fetch(`http://localhost:5000/reviews/${id}`, {
+        // console.log(updateData);
+        fetch(`https://server-side-rust.vercel.app/reviews/${id}`, {
             method: 'PATCH',
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                authorisation:`${localStorage.getItem("jwt-token")}`,
+                email:user.email
             },
             body: JSON.stringify(updateData)
-        }).then(res => res.json())
+        }).then(res => {
+            if(res.status == 403 || res.status ==401){
+                logOut()
+            }
+           return res.json()
+        })
             .then(data => {
                 if (data.success) {
                     alert(data.message)
@@ -62,10 +75,7 @@ const ReviewUpdate = () => {
     }
     return (
         <div className='backgroundG ' >
-            <Helmet>
-                    <meta charSet="utf-8" />
-                    <title>Update Review</title>
-                </Helmet>
+           
             <div className="w-full h-screen">
                 <div className="container mx-auto py-8">
                     <div className=" w-96 md:w-fit mx-auto bg-slate-300

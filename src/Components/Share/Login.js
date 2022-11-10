@@ -5,7 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import Swal from 'sweetalert2'
 import { Audio, ColorRing } from 'react-loader-spinner'
 import { IconName, FaFacebook } from "react-icons/fa";
-import { Helmet } from "react-helmet";
+
 
 const Login = () => {
     const { loginEmailPassword, facebookLogin, githubLogin, googleLogin, setLoading, loading, user } = useContext(AuthContex);
@@ -17,21 +17,21 @@ const Login = () => {
 
         googleLogin()
         .then(result => {
-            const user = {}
+            const userstoken = {email:result.user.email}
                 // jwt token creaite then account login 
 
-                fetch('http://localhost:5000/jwt', {
+                fetch('https://server-side-rust.vercel.app/jwt', {
                     method: 'POST',
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body :JSON.stringify(user)
+                    body :JSON.stringify(userstoken)
 
 
                 })
                     .then(res => res.json())
                     .then(data => {
-                        console.log(data.token)
+                        // console.log(data.token)
                         localStorage.setItem('jwt-token', data.token)
                         Swal.fire(
                             `successfully login`,
@@ -52,7 +52,7 @@ const Login = () => {
 
         githubLogin()
             .then(result => {
-                console.log(result.user)
+                // console.log(result.user)
                 Swal.fire(
                     `successfully login`,
                     'You clicked the button!',
@@ -70,7 +70,7 @@ const Login = () => {
 
         facebookLogin()
             .then(result => {
-                console.log(result.user)
+                // console.log(result.user)
                 Swal.fire(
                     `successfully login`,
                     'You clicked the button!',
@@ -90,24 +90,24 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
 
-        console.log(email, password)
+        // console.log(email, password)
         loginEmailPassword(email, password)
             .then(result => {
-            const user= {email}
+            const userstoken= {email: result.user.email}
                 // jwt token creaite then account login 
 
-                fetch('http://localhost:5000/jwt', {
+                fetch('https://server-side-rust.vercel.app/jwt', {
                     method: 'POST',
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body :JSON.stringify(user)
+                    body :JSON.stringify(userstoken)
 
 
                 })
                     .then(res => res.json())
                     .then(data => {
-                        console.log(data.token)
+                        // console.log(data.token)
                         localStorage.setItem('jwt-token', data.token)
                         Swal.fire(
                             `successfully login`,
@@ -151,10 +151,7 @@ const Login = () => {
     return (
         <div className=" mx-auto  max-w-lg  p-4 rounded-md shadow sm:p-8 dark:bg-gray-900 dark:text-gray-100
          bg-slate-900 rounded-lg text-white my-3" >
-            <Helmet>
-                <meta charSet="utf-8" />
-                <title>Login..</title>
-            </Helmet>
+         
             <h2 className="mb-3 text-3xl font-semibold text-center">Login to your account</h2>
 
             <div className="my-6 space-y-4">

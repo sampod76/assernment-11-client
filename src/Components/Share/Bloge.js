@@ -1,13 +1,10 @@
 import React from 'react';
-import { Helmet } from "react-helmet";
+
 
 const Bloge = () => {
     return (
         <div>
-            <Helmet>
-                    <meta charSet="utf-8" />
-                    <title>Blog</title>
-                </Helmet>
+          
             <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-200 rounded-box">
                 <div className="collapse-title text-xl font-medium">
                     Difference between sql vs nosql?

@@ -11,10 +11,10 @@ import { useEffect } from 'react';
 
 const ReviewCard = ({ service, id }) => {
 
-    const { user } = useContext(AuthContex);
-    const [reviewSingel , setReviewSingle]=useState([])
+    const { user, logOut } = useContext(AuthContex);
+    const [reviewSingel, setReviewSingle] = useState([])
     const [review, setReview] = useState(5);
-    const [defandence,setDefance]=useState(false)
+    const [defandence, setDefance] = useState(false)
 
 
 
@@ -52,13 +52,20 @@ const ReviewCard = ({ service, id }) => {
 
         // console.log(reviewData);
 
-        fetch('http://localhost:5000/reviews', {
+        fetch('https://server-side-rust.vercel.app/reviews', {
             method: 'POST',
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                authorisation:`${localStorage.getItem("jwt-token")}`,
+                email: user.email,
             },
             body: JSON.stringify(reviewData)
-        }).then(res => res.json())
+        }).then(res => {
+            if (res.status == 403 || res.status == 401) {
+                logOut()
+            }
+            return res.json()
+        })
             .then(data => {
                 if (data.success) {
                     // toast("Wow so easy !")
@@ -68,7 +75,7 @@ const ReviewCard = ({ service, id }) => {
 
                 }
                 else {
-
+                    alert(data.message)
                 }
             })
 
@@ -78,19 +85,22 @@ const ReviewCard = ({ service, id }) => {
 
     // get singel review to id 
 
-    useEffect(()=>{
-        fetch(`http://localhost:5000/reviewsId/${service._id}`)
-        .then(res => res.json())
-        .then(data => {
-            if(data.success){
-                console.log(data.data)
-                setReviewSingle(data.data)
-            }
-            else{
-                alert(data.message)
-            }
-        })
-    },[defandence])
+    useEffect(() => {
+        fetch(`https://server-side-rust.vercel.app/reviewsId/${service._id}`)
+            .then(res => {
+
+                return res.json()
+            })
+            .then(data => {
+                if (data.success) {
+                    // console.log(data.data)
+                    setReviewSingle(data.data)
+                }
+                else {
+                    alert(data.message)
+                }
+            })
+    }, [defandence, service._id])
 
 
     // console.log(review);
@@ -172,58 +182,58 @@ const ReviewCard = ({ service, id }) => {
             </div>
 
             <div>
-            {
-               reviewSingel.length ==0 && <div className='flex justify-center items-center '>
-                <div>
-                <h1 className='text-5xl font-bold text-red-600 text-center'>No reviews found yet</h1>
-                <img className='w-[40%] mx-auto' src="https://cdn.dribbble.com/users/1489103/screenshots/6326497/no-data-found.png" alt=""  />
-                </div>
-            </div>
-             }
-
-            <h1 className='bg-purple-600 p-2 rounded-t-lg w-fit mx-auto mt-2'>This is all review this product</h1>
-           <div className='grid sm:grid-cols-1 md:grid-cols-2 gap-3'>
-           {
-                reviewSingel.map(review => <div key={review._id} review={review}>
-                    <div className="container flex flex-col w-full mt-1 p-6 mx-auto divide-y rounded-md divide-gray-700 dark:bg-gray-900
-                     dark:text-gray-100 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-300">
-                        <div className="flex justify-between p-4">
-                            <div className="flex space-x-4">
-                                <div>
-                                    {
-                                      review?.photo ?
-                                        <img src={review?.photo} alt="" className="object-cover w-12 h-12 rounded-full dark:bg-gray-500 rounded-full" /> :<img src='https://cdn.pixabay.com/photo/2017/02/16/13/42/box-2071537__340.png' alt="" className="object-cover w-12 h-12 rounded-full dark:bg-gray-500 rounded-full" /> 
-                                    }
-                                </div>
-                                <div>
-                                    <h4 className="font-bold">{review.name}</h4>
-                                    <span className="text-xs hidden md:block dark:text-gray-400">{review.time}</span>
-                                </div>
-                            </div>
-                            <div className='block md:flex'>
-                                <h1 className='text-base md:text-2xl font-bold rounded-lg'>{review.productName}</h1>
-                                
-                            </div>
-                            <div className="flex items-center space-x-2 dark:text-yellow-500">
-                                <div className='flex'>
-                                    {
-                                        [...Array(Number(review.rating)).keys()].map((_, index) => <span key={index}><FcRating className=''></FcRating></span>)
-                                    }
-                                </div>
-                                <span className="text-xl font-bold">{review.rating}</span>
-                            </div>
+                {
+                    reviewSingel.length == 0 && <div className='flex justify-center items-center '>
+                        <div>
+                            <h1 className='text-5xl font-bold text-red-600 text-center'>No reviews found yet</h1>
+                            <img className='w-[40%] mx-auto' src="https://cdn.dribbble.com/users/1489103/screenshots/6326497/no-data-found.png" alt="" />
                         </div>
-                        <div className="p-4 space-y-2 text-sm dark:text-gray-400">
-                            <p>{review.comment}</p>
-                        </div>
-                       
                     </div>
+                }
+
+                <h1 className='bg-purple-600 p-2 rounded-t-lg w-fit mx-auto mt-2'>This is all review this product</h1>
+                <div className='grid sm:grid-cols-1 md:grid-cols-2 gap-3'>
+                    {
+                        reviewSingel.map(review => <div key={review._id} review={review}>
+                            <div className="container flex flex-col w-full mt-1 p-6 mx-auto divide-y rounded-md divide-gray-700 dark:bg-gray-900
+                     dark:text-gray-100 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-300">
+                                <div className="flex justify-between p-4">
+                                    <div className="flex space-x-4">
+                                        <div>
+                                            {
+                                                review?.photo ?
+                                                    <img src={review?.photo} alt="" className="object-cover w-12 h-12 rounded-full dark:bg-gray-500 rounded-full" /> : <img src='https://cdn.pixabay.com/photo/2017/02/16/13/42/box-2071537__340.png' alt="" className="object-cover w-12 h-12 rounded-full dark:bg-gray-500 rounded-full" />
+                                            }
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold">{review.name}</h4>
+                                            <span className="text-xs hidden md:block dark:text-gray-400">{review.time}</span>
+                                        </div>
+                                    </div>
+                                    <div className='block md:flex'>
+                                        <h1 className='text-base md:text-2xl font-bold rounded-lg'>{review.productName}</h1>
+
+                                    </div>
+                                    <div className="flex items-center space-x-2 dark:text-yellow-500">
+                                        <div className='flex'>
+                                            {
+                                                [...Array(Number(review.rating)).keys()].map((_, index) => <span key={index}><FcRating className=''></FcRating></span>)
+                                            }
+                                        </div>
+                                        <span className="text-xl font-bold">{review.rating}</span>
+                                    </div>
+                                </div>
+                                <div className="p-4 space-y-2 text-sm dark:text-gray-400">
+                                    <p>{review.comment}</p>
+                                </div>
+
+                            </div>
 
 
 
-                </div>)
-            }
-           </div>
+                        </div>)
+                    }
+                </div>
             </div>
         </div>
     );

@@ -1,36 +1,57 @@
 import React, { useEffect, useState } from 'react';
 import { FcRating } from "react-icons/fc";
 import { Link } from 'react-router-dom';
-import { Helmet } from "react-helmet";
+
 import { useContext } from 'react';
 import { AuthContex } from '../../ContexApi/ContexApi';
 
 
 const ReviewAll = () => {
-    const {user}=useContext(AuthContex)
+    const {user,logOut}=useContext(AuthContex)
     const [defandence,setDefance]=useState(false)
 
     const [reviewall, setReview] = useState([])
 
     useEffect(() => {
-        fetch(`http://localhost:5000/reviews/${user?.email}`)
-            .then(res => res.json())
+        fetch(`https://server-side-rust.vercel.app/reviews/${user?.email}`,{
+            headers:{
+                authorisation:`${localStorage.getItem("jwt-token")}`
+            }
+        })
+            .then(res => {
+                if(res.status == 403 || res.status ==401){
+                    logOut()
+                }
+               return res.json()
+            })
             .then(data => {
                 if (data.success) {
                     // alert(data.message)
                     setReview(data.data)
                 } else {
                     alert(data.message)
+                    // if(data.status == 403 || data.status ==401){
+                    //     logOut()
+                    // }
                 }
             })
-    }, [defandence])
+    }, [defandence, user?.email])
 
    
 
     const handleDelete = (e) => {
-        fetch(`http://localhost:5000/reviews/${e}`, {
-            method: 'DELETE'
-        }).then(res => res.json())
+        fetch(`https://server-side-rust.vercel.app/reviews/${e}`, {
+            method: 'DELETE',
+            headers:{
+                authorisation:`${localStorage.getItem("jwt-token")}`,
+                email: user.email
+            }
+        }).then(res => {
+            if(res.status == 403 || res.status ==401){
+                logOut()
+            }
+           return res.json()
+        })
         .then(data=>{
             if(data.success){
                 alert(data.message)
@@ -43,14 +64,11 @@ const ReviewAll = () => {
         
     }
 
-    console.log(reviewall.length);
+    
 
     return (
         <div>
-            <Helmet>
-                    <meta charSet="utf-8" />
-                    <title>All Review</title>
-                </Helmet>
+           
              {
                 reviewall.length ==0 && <div className='flex justify-center items-center h-screen '>
                 <div>
